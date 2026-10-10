@@ -224,11 +224,11 @@ class DemoConnection implements BleConnection {
         sub = source.listen(controller.add, onError: controller.addError);
         _subscriptions.add(sub!);
       },
-      onCancel: () async {
+      onCancel: () {
         final s = sub;
         if (s != null) {
           _subscriptions.remove(s);
-          await s.cancel();
+          s.cancel();
         }
       },
     );

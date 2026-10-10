@@ -135,7 +135,7 @@ class DeviceController extends ChangeNotifier {
   Future<void> toggleNotify(GattCharacteristic c) async {
     final existing = _subscriptions.remove(c.key);
     if (existing != null) {
-      await existing.cancel();
+      unawaited(existing.cancel());
       _info('Notifications off · ${c.displayName}');
       return;
     }

@@ -65,7 +65,9 @@ class ScanController extends ChangeNotifier {
   Future<void> stop() async {
     final sub = _scanSub;
     _scanSub = null;
-    if (sub != null) await sub.cancel();
+    // Not awaited: the result carries no information, and awaiting a cancel can stall under fake
+    // async in widget tests.
+    if (sub != null) unawaited(sub.cancel());
     if (scanning) {
       scanning = false;
       _notify();

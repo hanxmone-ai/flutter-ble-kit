@@ -64,7 +64,7 @@ class DeviceSession {
   }
 
   Future<void> _connect() async {
-    await _statusSub?.cancel();
+    unawaited(_statusSub?.cancel());
     final connection = await adapter.connect(deviceId);
     if (_closing) {
       await connection.disconnect();
@@ -104,7 +104,7 @@ class DeviceSession {
   Future<void> close() async {
     if (_state == SessionState.closed) return;
     _closing = true;
-    await _statusSub?.cancel();
+    unawaited(_statusSub?.cancel());
     _statusSub = null;
     final connection = _connection;
     _connection = null;
