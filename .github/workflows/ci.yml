@@ -49,7 +49,7 @@ jobs:
         run: flutter analyze --no-fatal-infos 2>&1 | tee analyze.log
 
       - name: Test
-        run: flutter test 2>&1 | tee test.log
+        run: flutter test --machine > test.jsonl
 
       - name: Build debug APK
         run: flutter build apk --debug 2>&1 | tee build.log
@@ -65,4 +65,4 @@ jobs:
 
       - name: Report failures
         if: failure()
-        run: python3 tool/ci_annotate.py error create.log pub.log test.log build.log
+        run: python3 tool/ci_annotate.py error test.jsonl build.log
