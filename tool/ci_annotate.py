@@ -13,7 +13,7 @@ from pathlib import Path
 
 ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 MAX_LINES = 120
-MAX_CHARS = 3500
+MAX_CHARS = 6000
 
 
 def failures(path: Path) -> list[str]:
@@ -32,6 +32,9 @@ def failures(path: Path) -> list[str]:
             names[event["test"]["id"]] = event["test"]["name"]
         elif kind == "error":
             errors.setdefault(event["testID"], []).append(f"{event['error']}\n{event.get('stackTrace', '')}")
+        elif kind == "print":
+            # Flutter reports exceptions caught during a widget test as printed text.
+            errors.setdefault(event["testID"], []).append(event.get("message", ""))
         elif kind == "testDone" and event.get("result") != "success" and not event.get("hidden"):
             failed.append(event["testID"])
     reports = []
