@@ -1,7 +1,5 @@
-name: ble_kit
-description: >-
-  Flutter Bluetooth LE toolkit and demo app: scan, connect, browse GATT
-  services, read/write/notify, heart-rate parsing and receipt printing.
+name: flutter_ble_kit
+description: Bluetooth Low Energy toolkit and demo app for Flutter - scan, connect, inspect GATT, live sensor data and receipt printing over BLE.
 publish_to: none
 version: 0.1.0+1
 
@@ -12,17 +10,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_reactive_ble: ^5.4.0
+  permission_handler: ^11.3.1
+  qr_flutter: ^4.1.0
   escpos_kit:
     git:
-      url: https://github.com/hanxmone-ai/escpos-kit
+      url: https://github.com/hanxmone-ai/escpos-kit.git
       ref: main
-  # 1.36 changed the connect() signature; stay on the API this code targets.
-  flutter_blue_plus: ">=1.34.5 <1.36.0"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: DejaVuSansMono
+      fonts:
+        - asset: assets/fonts/DejaVuSansMono.ttf
+        - asset: assets/fonts/DejaVuSansMono-Bold.ttf
+          weight: 700

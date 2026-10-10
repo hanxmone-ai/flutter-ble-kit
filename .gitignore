@@ -6,30 +6,25 @@
 .pub-cache/
 .pub/
 build/
-pubspec.lock.bak
-*.iml
-.idea/
-.vscode/
 coverage/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.DS_Store
 
 # Android
 android/.gradle/
 android/local.properties
 android/key.properties
-android/app/upload-keystore.jks
-android/captures/
-**/GeneratedPluginRegistrant.*
+**/*.jks
+**/*.keystore
 
 # iOS
 ios/Pods/
 ios/.symlinks/
 ios/Flutter/Flutter.framework
-ios/Flutter/Flutter.podspec
 ios/Flutter/Generated.xcconfig
 ios/Flutter/flutter_export_environment.sh
-ios/Flutter/ephemeral/
-ios/Runner/GeneratedPluginRegistrant.*
 **/xcuserdata/
-
-# CI scratch
-*.log

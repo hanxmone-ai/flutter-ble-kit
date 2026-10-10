@@ -1,0 +1,46 @@
+# Generates the android/, ios/ and web/ projects with the current stable
+# Flutter (once, when they are missing), patches in Bluetooth permissions and
+# commits them back.
+name: Bootstrap platforms
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: check
+        run: |
+          if [ -f android/app/src/main/AndroidManifest.xml ]; then echo "missing=false" >> "$GITHUB_OUTPUT"; else echo "missing=true" >> "$GITHUB_OUTPUT"; fi
+
+      - if: steps.check.outputs.missing == 'true'
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - if: steps.check.outputs.missing == 'true'
+        name: flutter create
+        run: |
+          flutter --version
+          flutter create --org io.github.hanxmoneai --project-name flutter_ble_kit --platforms android,ios,web .
+          rm -f test/widget_test.dart
+          python3 tool/patch_platforms.py
+          flutter pub get
+
+      - if: steps.check.outputs.missing == 'true'
+        name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android ios web .metadata pubspec.lock
+          git commit -m "Generate platform projects with flutter create and add Bluetooth permissions"
+          git push
