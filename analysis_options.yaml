@@ -7,6 +7,6 @@ analyzer:
 
 linter:
   rules:
-    - prefer_final_locals
     - prefer_single_quotes
-    - sort_child_properties_last
+    - always_declare_return_types
+    - avoid_dynamic_calls

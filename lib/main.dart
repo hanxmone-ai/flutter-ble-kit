@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'src/ui/app.dart';
+import 'app.dart';
 
-void main() {
-  runApp(const BleKitApp());
-}
+void main() => runApp(const BleKitApp());
